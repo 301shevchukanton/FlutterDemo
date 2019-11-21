@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('title'),
+          title: Text('My awesome profile'),
         ),
         body: SingleChildScrollView(
           physics: ScrollPhysics(),
@@ -100,28 +100,39 @@ class MySkills extends StatefulWidget {
 }
 
 class _MySkillsState extends State<MySkills> {
-  List<String> litems = [
+  List<String> _litems = [
     "Java",
     "Kotlin",
     "Jira",
     "CI/CD",
     "Project management"
   ];
+  final TextEditingController _textEdittingController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        separatorBuilder: (context, index) => Divider(
-              color: Colors.black,
-            ),
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: litems.length,
-        itemBuilder: (BuildContext ctxt, int Index) {
-          return Padding(
-              padding: const EdgeInsets.only(left: 50),
-              child: new Text(litems[Index],
-                  style: Theme.of(context).textTheme.display1));
-        });
+    return new Column(children: <Widget>[
+      new TextField(
+        controller: _textEdittingController,
+        onSubmitted: (text) {
+          _litems.add(text);
+          _textEdittingController.clear();
+          setState(() {});
+        },
+      ),
+      ListView.separated(
+          separatorBuilder: (context, index) => Divider(
+                color: Colors.black,
+              ),
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: _litems.length,
+          itemBuilder: (BuildContext ctxt, int Index) {
+            return Padding(
+                padding: const EdgeInsets.only(left: 50),
+                child: new Text(_litems[Index],
+                    style: Theme.of(context).textTheme.display1));
+          })
+    ]);
   }
 }
